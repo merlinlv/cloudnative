@@ -1,0 +1,52 @@
+server:
+  port: 9999
+spring:
+  cloud:
+    kubernetes:
+      name: member-demo
+      discovery:
+        all-namespaces: true
+      reload:
+        enabled: true
+      config:
+        paths: /etc/config/application.yaml
+        name: default-name
+        namespace: default-namespace
+        sources:
+          - name: member-demo
+          - namespace: n1
+          - namespace: n3
+            name: c3
+  datasource:
+    url: jdbc:h2:file:~/data/test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false;FILE_LOCK=NO
+  h2:
+    console:
+      enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: update
+  sql:
+    init:
+      mode: always
+  application:
+    name: member-demo
+mybatis:
+  configuration:
+    use-actual-param-name: on
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+management:
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+
+
+
+
+
+
